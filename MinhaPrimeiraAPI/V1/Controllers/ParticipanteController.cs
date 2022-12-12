@@ -34,6 +34,8 @@ namespace MinhaPrimeiraAPI.V1.Controllers
         [HttpGet]  // GetAll listar tudo
         public IActionResult GetAll()
         {
+            string teste = "Daniel";
+
             var participantes = participanteRepository.GetAll();
             return Ok(participantes);
         }

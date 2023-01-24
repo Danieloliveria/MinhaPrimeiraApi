@@ -2,7 +2,6 @@
 using MinhaPrimeiraAPI.Context;
 using MinhaPrimeiraAPI.Models;
 using MinhaPrimeiraAPI.Repositories.Interfaces;
-using System;
 
 namespace MinhaPrimeiraAPI.Repositories
 {

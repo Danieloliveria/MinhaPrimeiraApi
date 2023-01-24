@@ -2,6 +2,7 @@
 using MinhaPrimeiraAPI.Context;
 using MinhaPrimeiraAPI.Models;
 using MinhaPrimeiraAPI.Repositories.Interfaces;
+using System;
 
 namespace MinhaPrimeiraAPI.Repositories
 {
@@ -29,30 +30,34 @@ namespace MinhaPrimeiraAPI.Repositories
 
         public async Task<Participante> PutAsync(Participante participante)
         {
-            applicationDbContext.Participantes.Update(participante);
+            Participante participanteConsultado = await GetByIdAsync(participante.Id);
+
+            if (participanteConsultado is null)
+                return null;
+
+            applicationDbContext.Entry(participanteConsultado).CurrentValues.SetValues(participante);
+
             await applicationDbContext.SaveChangesAsync();
             return participante;
         }
 
         public async Task<Participante> DeleteAsync(Guid id)
         {
-            Participante consultaParticipante = await GetByIdAsync(id);
+            Participante participanteConsultado = await GetByIdAsync(id);
 
-            if (consultaParticipante is not null)
+            if (participanteConsultado is not null)
             {
-                applicationDbContext.Remove(consultaParticipante);
+                applicationDbContext.Remove(participanteConsultado);
                 await applicationDbContext.SaveChangesAsync();
             }
 
-            return consultaParticipante;
+            return participanteConsultado;
         }
 
         public async Task<Participante> GetByIdAsync(Guid id)
         {
-            // Task<Participante> consultaParticipante = applicationDbContext.Participantes.Where(participante => participante.Id == id).FirstOrDefaultAsync();
-
-            Task<Participante> consultaParticipante = applicationDbContext.Participantes.FirstOrDefaultAsync(participante => participante.Id == id);
-            return await consultaParticipante;
+            Task<Participante> participanteConsultado = applicationDbContext.Participantes.FirstOrDefaultAsync(participante => participante.Id == id);
+            return await participanteConsultado;
         }
 
         public async Task<IList<Participante>> GetByNomeAsync(string nome)

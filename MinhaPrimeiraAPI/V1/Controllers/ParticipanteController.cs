@@ -54,7 +54,10 @@ namespace MinhaPrimeiraAPI.V1.Controllers
         [HttpPut] // Atualizar
         public async Task<IActionResult> PutAsync([FromBody] Participante participante)
         {
-            await participanteRepository.PutAsync(participante);
+            Participante atualizado = await participanteRepository.PutAsync(participante);
+
+            if (atualizado == null)
+                return BadRequest(new { mensagem = "Nenhum participante foi encontrado com o id informado." });
 
             return Ok(new
             {

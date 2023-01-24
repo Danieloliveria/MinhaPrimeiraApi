@@ -34,3 +34,9 @@ namespace MinhaPrimeiraAPI.Context
         }
     }
 }
+
+// Migration
+
+// add - migration Inicial - Context AppDbContext - StartupProject MinhaPrimeiraAPI - Project MinhaPrimeiraAPI
+
+// update - database - Context AppDbContext - StartupProject MinhaPrimeiraAPI - Project MinhaPrimeiraAPI

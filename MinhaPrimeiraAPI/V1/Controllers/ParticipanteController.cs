@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MinhaPrimeiraAPI.Models;
 using MinhaPrimeiraAPI.Repositories.Interfaces;
 
 namespace MinhaPrimeiraAPI.V1.Controllers
@@ -31,23 +32,58 @@ namespace MinhaPrimeiraAPI.V1.Controllers
         // "Endpoint" endereço onde será acessado.
         // "HttpGet" Verbo.
 
-        [HttpGet]  // GetAll listar tudo
-        public IActionResult GetAll()
+        [HttpGet] // Listar tudo
+        public IActionResult GetAllAsync()
         {
-            string teste = "Daniel teste";
-
-            var participantes = participanteRepository.GetAll();
+            IEnumerable<Participante> participantes = participanteRepository.GetAllAsync();
             return Ok(participantes);
         }
 
-        // TODO Tarefa a fazer
+        [HttpPost] // Inserir
+        public async Task<IActionResult> PostAsync([FromBody] Participante participante)
+        {
+            await participanteRepository.PostAsync(participante);
+            return Ok("Participante criado com sucesso!");
+        }
 
-        // PostAsync - inserir
+        [HttpPut] // Atualizar
+        public async Task<IActionResult> PutAsync([FromBody] Participante participante)
+        {
+            await participanteRepository.PutAsync(participante);
+            return Ok("Participante atualizado com sucesso!");
+        }
 
-        // PutAsync - atualizar
+        [HttpDelete("{id}")] // Remover
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            Participante removido = await participanteRepository.DeleteAsync(id);
 
-        // DeleteAsync - remover
+            if (removido == null)
+                return BadRequest(new { mensagem = "Nenhum participante foi encontrado com o id informado." });
 
-        // GetByIdAsync - obter por id
+            return Ok("Participante removido com sucesso.");
+        }
+
+        [HttpGet("{id:guid}")] // Obter por id
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            Participante consultaParticipante = await participanteRepository.GetByIdAsync(id);
+
+            if (consultaParticipante == null)
+                return BadRequest(new { mensagem = "Nenhum participante foi encontrado com o id informado." });
+
+            return Ok(consultaParticipante);
+        }
+
+        [HttpGet("nome")] // Obter nome
+        public async Task<IActionResult> GetByNomeAsync(string nome)
+        {
+            IList<Participante> consultaNomeParticipante = await participanteRepository.GetByNomeAsync(nome);
+
+            if (consultaNomeParticipante == null)
+                return BadRequest(new { mensagem = "Nenhum participante foi encontrado com o nome informado." });
+
+            return Ok(consultaNomeParticipante);
+        }
     }
 }

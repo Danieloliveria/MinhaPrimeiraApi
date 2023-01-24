@@ -43,14 +43,24 @@ namespace MinhaPrimeiraAPI.V1.Controllers
         public async Task<IActionResult> PostAsync([FromBody] Participante participante)
         {
             await participanteRepository.PostAsync(participante);
-            return Ok("Participante criado com sucesso!");
+
+            return Ok(new
+            {
+                mensagem = "Participante criado com sucesso!",
+                sucesso = true,
+            });
         }
 
         [HttpPut] // Atualizar
         public async Task<IActionResult> PutAsync([FromBody] Participante participante)
         {
             await participanteRepository.PutAsync(participante);
-            return Ok("Participante atualizado com sucesso!");
+
+            return Ok(new
+            {
+                mensagem = "Participante atualizado com sucesso!",
+                sucesso = true,
+            });
         }
 
         [HttpDelete("{id}")] // Remover
@@ -61,7 +71,11 @@ namespace MinhaPrimeiraAPI.V1.Controllers
             if (removido == null)
                 return BadRequest(new { mensagem = "Nenhum participante foi encontrado com o id informado." });
 
-            return Ok("Participante removido com sucesso.");
+            return Ok(new
+            {
+                mensagem = "Participante removido com sucesso.",
+                sucesso = true,
+            });
         }
 
         [HttpGet("{id:guid}")] // Obter por id
@@ -80,7 +94,7 @@ namespace MinhaPrimeiraAPI.V1.Controllers
         {
             IList<Participante> consultaNomeParticipante = await participanteRepository.GetByNomeAsync(nome);
 
-            if (consultaNomeParticipante == null)
+            if (consultaNomeParticipante.Count == 0)
                 return BadRequest(new { mensagem = "Nenhum participante foi encontrado com o nome informado." });
 
             return Ok(consultaNomeParticipante);

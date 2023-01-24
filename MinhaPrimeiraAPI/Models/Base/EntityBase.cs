@@ -10,7 +10,7 @@ namespace MinhaPrimeiraAPI.Models.Base
 
         public string Status { get; set; }
 
-        public DateTime? CriadoEm { get; set; }
+        public DateTime? CriadoEm { get; set; } = DateTime.Now;
 
         public DateTime? AlteradoEm { get; set; }
     }

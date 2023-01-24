@@ -3,8 +3,7 @@ using MinhaPrimeiraAPI.Models;
 
 namespace MinhaPrimeiraAPI.Context
 {
-    // "Context" Responsável pela interação com os objetos e
-    // administra os objetos durante o tempo de execução.
+    // "Context" Responsável pela interação com os objetos e administra os objetos durante o tempo de execução.
     public class AppDbContext : DbContext // "DbContext" inicializa uma nova instância da classe.
     {
         // Representa uma sessão com o banco de dados para executar operações do CRUD.
